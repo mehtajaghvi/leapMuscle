@@ -1,19 +1,34 @@
 var webSocket = require('ws'),
     ws = new webSocket('ws://127.0.0.1:6437'),
     five = require('johnny-five'),
-    leapMotion = require('leap'),
     board = new five.Board(),
     ledThumb,ledIndex,ledMiddle,ledRing,ledPinky,frame;
+//
+var ArduinoFirmata = require('arduino-firmata');
+var arduino = new ArduinoFirmata().connect();
+//
+ 
 
-board.on('ready', function() {
+arduino.on('connect', function(){
+  console.log("connect!! "+arduino.serialport_name);
+  console.log("board version: "+arduino.boardVersion);
+  
+  setInterval(function(){
+    var an = Math.random()*255;
+    console.log("analog write 9 pin : " + an);
+    arduino.analogWrite(9, an);
+  }, 100);
+
+
+/*board.on('ready', function() {
     ledThumb =  new five.Led(13); 
     ledIndex =  new five.Led(12);
     ledMiddle = new five.Led(10);
     ledRing =   new five.Led(9); 
     ledPinky =  new five.Led(8);  
     this.pinMode(3, five.Pin.PWM);
-    this.pinMode(11, five.Pin.PWM);
-    this.analogWrite(11, 255);			
+    this.pinMode(11, five.Pin.PWM);*/
+   // this.analogWrite(11, 255);			
 //////////////////////////////////////////////////////
 
     ws.on('message', function(data, flags) {
@@ -26,18 +41,20 @@ board.on('ready', function() {
 	var fingers = frame.pointables.length;
         console.log(fingers);
        	if (fingers ==5){
-	    this.analogWrite(11, 255);	
-	    ledThumb.on();
-	    ledIndex.on(); 
-	    ledMiddle.on(); 
-	    ledRing.on();
-	    ledPinky.on(); 
-}	else if (fingers == 0){
-	    ledThumb.off();
-	    ledIndex.off(); 
-	    ledMiddle.off(); 
-	    ledRing.off();
-	    ledPinky.off(); 
+	    arduino.digitalWrite(13, stat); 	
+	    //this.analogWrite(11, 255);	
+	    //ledThumb.on();
+	    //ledIndex.on(); 
+	    //ledMiddle.on(); 
+	    //ledRing.on();
+	    //ledPinky.on(); 
+	    console.log("five");	
+}	else if (fingers <= 0){
+	   // ledThumb.off();
+	   // ledIndex.off(); 
+	   // ledMiddle.off(); 
+	   // ledRing.off();
+	   // ledPinky.off(); 
 }
         }
 ///////////////////////
@@ -45,4 +62,5 @@ board.on('ready', function() {
             //console.log("False");
         }
     });
+//});
 });

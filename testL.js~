@@ -1,7 +1,7 @@
 var webSocket = require('ws'),
     ws = new webSocket('ws://127.0.0.1:6437'),
     five = require('johnny-five'),
-    leapMotion = require('leap'),
+    leapMotion = require('leap.js'),
     board = new five.Board(),
     ledThumb,ledIndex,ledMiddle,ledRing,ledPinky,frame;
 

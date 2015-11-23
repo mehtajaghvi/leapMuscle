@@ -1,7 +1,6 @@
 var webSocket = require('ws'),
     ws = new webSocket('ws://127.0.0.1:6437'),
     five = require('johnny-five'),
-    leapMotion = require('leap'),
     board = new five.Board(),
     ledThumb,ledIndex,ledMiddle,ledRing,ledPinky,frame;
 
@@ -26,13 +25,13 @@ board.on('ready', function() {
 	var fingers = frame.pointables.length;
         console.log(fingers);
        	if (fingers ==5){
-	    this.analogWrite(11, 255);	
+	    //this.analogWrite(11, 255);	
 	    ledThumb.on();
 	    ledIndex.on(); 
 	    ledMiddle.on(); 
 	    ledRing.on();
 	    ledPinky.on(); 
-}	else if (fingers == 0){
+}	else if (fingers <= 0){
 	    ledThumb.off();
 	    ledIndex.off(); 
 	    ledMiddle.off(); 
