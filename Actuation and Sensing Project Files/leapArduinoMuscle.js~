@@ -30,7 +30,7 @@ arduino.on('connect', function(){
 	    arduino.analogWrite(11, 0);			
 }	else if (fingers <= 5){
 	    arduino.analogWrite(3, 0);	
-	    arduino.analogWrite(11, 155);					  
+	    arduino.analogWrite(11, 255);					  
 }
         }
 ///////////////////////

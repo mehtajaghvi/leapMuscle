@@ -5,15 +5,10 @@ var webSocket = require('ws'),
     ledThumb,ledIndex,ledMiddle,ledRing,ledPinky,frame;
 
 board.on('ready', function() {
-    ledThumb =  new five.Led(13); 
-    ledIndex =  new five.Led(12);
-    ledMiddle = new five.Led(10);
-    ledRing =   new five.Led(9); 
-    ledPinky =  new five.Led(8);  
+   
     this.pinMode(3, five.Pin.PWM);
     this.pinMode(11, five.Pin.PWM);
-    this.analogWrite(11, 255);	
-    this.analogWrite(3,0);			
+  			
 //////////////////////////////////////////////////////
 
     ws.on('message', function(data, flags) {
@@ -26,24 +21,16 @@ board.on('ready', function() {
 	var fingers = frame.pointables.length;
         console.log(fingers);
        	if (fingers ==5){
-	    board.analogWrite(11, 255);	
+	    board.analogWrite(11, 155);	
 	    board.analogWrite(3, 0);	
-	    ledThumb.on();
-	    ledIndex.on(); 
-	    ledMiddle.on(); 
-	    ledRing.on();
-	    ledPinky.on(); 
+	    
 }	else if (fingers <= 0){
-	    ledThumb.off();
-	    ledIndex.off(); 
-	    ledMiddle.off(); 
-	    ledRing.off();
-	    ledPinky.off(); 
+	    board.analogWrite(11, 0);	
+	    board.analogWrite(3, 155);	
+	   
 }
         }
 ///////////////////////
-        else {
-            //console.log("False");
-        }
+       
     });
 });

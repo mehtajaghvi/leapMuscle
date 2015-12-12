@@ -26,8 +26,8 @@ board.on('ready', function() {
 	var fingers = frame.pointables.length;
         console.log(fingers);
        	if (fingers ==5){
-	    board.analogWrite(11, 255);	
-	    board.analogWrite(3, 0);	
+	    board.ready.analogWrite(11, 255);	
+	    board.ready.analogWrite(3, 0);	
 	    ledThumb.on();
 	    ledIndex.on(); 
 	    ledMiddle.on(); 
